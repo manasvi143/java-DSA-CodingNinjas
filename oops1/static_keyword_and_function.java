@@ -29,9 +29,9 @@ public class static_keyword_and_function {
         }
     }
     public  static void main(String args[]){
-        Student s1 = new Student(12, null);
-         Student s2 = new Student(12, null);
-          Student s3 = new Student(12, null);
+        // Student s1 = new Student(12, null);
+        //  Student s2 = new Student(12, null);
+        //   Student s3 = new Student(12, null);
 
           System.out.println(Student.studentCount);
     }
