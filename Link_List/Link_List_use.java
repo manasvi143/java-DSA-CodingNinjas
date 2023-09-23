@@ -3,7 +3,64 @@ package Link_List;
 import java.util.Scanner;
 
 public class Link_List_use {
+    public static Node<Integer> evenList(Node<Integer> head){
+        if(head.next == null && head.data%2 == 0){
+            return head;
+        }
+          if(head.next == null && head.data%2 != 0){
+            return null;
+        }
 
+        Node<Integer> smallAns = evenList(head.next);
+        if(head.data%2 == 0){
+            head.next = smallAns;
+            return head;
+        }else{
+        return smallAns;
+        }
+        
+    }
+    public static Node<Integer> oddList(Node<Integer> head){
+
+        if(head.next == null && head.data%2 == 0){
+          return null;
+      }
+        if(head.next == null && head.data%2 != 0){
+          return head;
+      }
+        
+
+      Node<Integer> smallAns = oddList(head.next);
+      if(head.data%2 != 0){
+          head.next = smallAns;
+          return head;
+      }else{
+      return smallAns;
+      }
+  }
+    
+    public static Node<Integer> removeDuplicates(Node<Integer> head) {
+		//Your code goes here
+        if(head==null)
+            return head;
+        if(head.next==null)
+            return head;
+        Node<Integer> t1=head,t2=head.next;
+        Node<Integer> finalhead=head;
+        while(t2!=null){
+            if(t1.data.equals(t2.data))
+            {
+                t2=t2.next; 
+            }
+            else{
+                t1.next=t2;
+                t1=t2;
+            }
+        }
+
+        t1.next=null;
+        return finalhead;
+}
     public static Node<Integer> takeInput(){
 
         Scanner sc = new Scanner(System.in);
@@ -44,6 +101,10 @@ public class Link_List_use {
 
     public static void main(String args[]){
         Node<Integer> head = takeInput();
-        print(head);
+        // Node<Integer> head1 = evenList(head);
+        Node<Integer> head2 = oddList(head);
+        // print(head1);
+        System.out.println();
+        print(head2);
     }
 }
