@@ -37,8 +37,7 @@ public class Link_List_use {
       }else{
       return smallAns;
       }
-  }
-    
+    }
     public static Node<Integer> removeDuplicates(Node<Integer> head) {
 		//Your code goes here
         if(head==null)
@@ -60,7 +59,7 @@ public class Link_List_use {
 
         t1.next=null;
         return finalhead;
-}
+    }
     public static Node<Integer> takeInput(){
 
         Scanner sc = new Scanner(System.in);
@@ -87,7 +86,6 @@ public class Link_List_use {
         }
         return head;
     }
-    
     public static void print(Node<Integer> head){
         if(head.next  == null){
             System.out.println(head);
@@ -98,12 +96,51 @@ public class Link_List_use {
             head = head.next;
         }
     }
+    public static Node<Integer> skipMdeleteN(Node<Integer> head, int M, int N) {
+		
+        if(head == null || N == 0){
+            return head;
+        }
+        if(M == 0 ){
+            return null;
+        }
+        Node<Integer> temp = head;
+        Node<Integer> t = null;
+
+        int  c ;
+
+        while(temp != null){
+            for(c =1 ; c != M ; c++){
+                if(temp != null){
+                temp = temp.next;
+                }
+            }
+            if(temp != null){
+            t = temp;
+            for(c = 0 ; c != N ; c++){
+                if( t != null){
+                t = t.next;
+                }
+            }
+            if( t != null && t.next != null){
+                t = t.next;
+                temp.next = t;
+                temp = t;
+            }else{
+                temp.next = null;
+                temp = temp.next;
+            }
+        }
+        }
+       return head;
+	}
 
     public static void main(String args[]){
         Node<Integer> head = takeInput();
         // Node<Integer> head1 = evenList(head);
-        Node<Integer> head2 = oddList(head);
+        // Node<Integer> head2 = oddList(head);
         // print(head1);
+        Node<Integer>head2 = skipMdeleteN(head, 2, 3);
         System.out.println();
         print(head2);
     }
