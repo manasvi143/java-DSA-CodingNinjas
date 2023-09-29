@@ -3,7 +3,41 @@ package Trees;
 import java.util.Scanner;
 
 public class Tree_Use {
-    
+    public static void preOrder(TreeNode<Integer> root){
+        if(root == null){
+            return;
+        }
+        System.out.print(root.data);
+        for(int i = 0 ; i< root.children.size() ; i++){
+            preOrder(root.children.get(i));
+        }
+    }
+    public static void printAtK(TreeNode<Integer> root , int K){
+
+        if(K < 0){
+            return ;
+        }
+        if(K == 0){
+        System.out.println(root.data);
+        return;
+    }
+
+        for(int i = 0 ; i < root.children.size() ; i++){
+            printAtK(root.children.get(i), K -1);
+        }
+    }
+    public static int largest(TreeNode<Integer> root){
+        if(root == null){
+            return Integer.MIN_VALUE;
+        }
+        int ans = root.data;
+        for(int i = 0 ; i< root.children.size(); i++){
+            int childLargest = largest(root.children.get(i));
+            if(childLargest > ans)
+            ans = childLargest;
+        }
+        return ans;
+    }
     public static TreeNode<Integer> takeInput(){
         int n ;
         Scanner sc = new Scanner(System.in);
@@ -62,13 +96,46 @@ public class Tree_Use {
         }
         return root;
     }
+    public static int numNodes(TreeNode<Integer> root){
+        if(root == null){
+            return 0;
+            // this is not a base case , this condition will only run once if,
+            // root is null.
+        }
 
-    
+        int count = 1; 
+        /* no need for base case because of the for loop  */
+
+        for(int i = 0 ; i < root.children.size() ; i++){
+            count += numNodes(root.children.get(i));
+        }
+        return count;
+    }
+    public static int numNodeGreater(TreeNode<Integer> root,int x){
+
+		if(root == null){
+		return 0;
+        }
+        int ans = root.data , j = 0 ;
+		for(int i = 0 ; i < root.children.size() ; i++){
+		 int greater = numNodeGreater(root.children.get(i), x);
+             
+			if( ans > x){
+			j++;
+			}
+		}
+		return j;
+	}
 
     public static void main(String args[]){
 
         TreeNode<Integer> root = takeInputLevelWise();
-        print(root);
+        // int ans = numNodes(root);
+        // System.out.println(ans);
+        // System.out.println(largest(root));
+        // System.out.println(numNodeGreater(root, 1));
+        // printAtK(root, 1);
+        preOrder(root);
     }
 }
 
