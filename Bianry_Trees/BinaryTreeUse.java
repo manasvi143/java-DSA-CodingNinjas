@@ -4,6 +4,114 @@ import java.util.Scanner;
 
 public class BinaryTreeUse {
 
+    public static void inorder(BinaryTreeNode<Integer> root){
+        if(root == null){
+            return ;
+        }
+        inorder(root.left);
+        System.out.println(root.data + " ");
+        inorder(root.right);
+    }
+    public static pair<Integer,Integer> diameterBetter(BinaryTreeNode<Integer> root){
+        if(root == null){
+            pair<Integer, Integer> ans = new pair<>();
+            ans.first = 0 ;
+            ans.second = 0;
+            return ans;
+        }
+        pair<Integer,Integer> Lo = diameterBetter(root.left);
+        pair<Integer,Integer> Ro = diameterBetter(root.right);
+
+        int height = (1+ Math.max(Lo.first , Ro.first));
+        int option1 = Lo.first + Ro.first;
+        int option2 = Lo.second;
+        int option3 = Ro.second;
+
+        int diameter = Math.max(Math.max(option2, option3) , option1);
+
+         pair<Integer, Integer> ans = new pair<>();
+            ans.first = height ;
+            ans.second = diameter;
+            return ans;
+        }
+    public static int diameter(BinaryTreeNode<Integer> root){
+        if(root == null){
+            return 0 ;
+        }
+
+        int option1 = height(root.left) + height(root.right);
+        int option2 = diameter(root.left);
+        int option3 = diameter(root.right);
+
+        return Math.max(option1, Math.max(option2, option3));
+    }
+    public static BalancedTreeReturn isBalancedBetter(BinaryTreeNode<Integer> root){
+
+        if(root == null){
+            BalancedTreeReturn ans = new BalancedTreeReturn();
+            ans.height = 0;
+            ans.isBal = true;
+            return ans;
+        }
+        BalancedTreeReturn leftOutput = isBalancedBetter(root.left);
+        BalancedTreeReturn rightOutput = isBalancedBetter(root.right);
+
+        boolean isBal = true;
+        int height = 1 + Math.max(leftOutput.height, rightOutput.height);
+
+        if(Math.abs(leftOutput.height - rightOutput.height) > 1){
+            isBal =false;
+        }
+        if(!leftOutput.isBal || !rightOutput.isBal){
+            isBal = false;
+        }
+        BalancedTreeReturn ans = new BalancedTreeReturn();
+        ans.height = height;
+        ans.isBal = isBal;
+
+        return ans;
+    }
+    public static boolean isBalanced(BinaryTreeNode<Integer> root){
+        if(root == null){
+            return true;
+        }
+        int leftHeight = height(root.left);
+        int rightHeight = height(root.right);
+
+        if(Math.abs( rightHeight - leftHeight) > 1){
+            return false;
+        }
+
+        boolean isleftBalanced = isBalanced(root.left);
+        boolean isRightBalanced = isBalanced(root.right);
+
+        return isleftBalanced && isRightBalanced;
+    }
+    public static int height(BinaryTreeNode<Integer> root) {
+		if(root == null){
+			return 0;
+		}
+
+		int leftHeight = height(root.left);
+		int rightHeight = height(root.right);
+
+		if(leftHeight > rightHeight){
+			return leftHeight+1;
+		}
+		return rightHeight+1;
+	}
+    public static BinaryTreeNode<Integer> removeLeaves(BinaryTreeNode<Integer> root){
+
+        if(root == null){
+            return null;
+        }
+        if(root.left == null && root.right == null){
+            return null;
+        }
+        root.left = removeLeaves(root.left);
+        root.right = removeLeaves(root.right);
+        return root;
+    }
     public static void printAtDepthK(BinaryTreeNode<Integer> root , int k){
         if(root == null){
             return;
@@ -110,7 +218,9 @@ public class BinaryTreeUse {
 
         BinaryTreeNode<Integer> root = takeInputLevelWise();
         print(root);
-        System.out.println(countNodes(root));
+        System.out.println("Diameter: " + diameterBetter(root).second);
+         System.out.println("Height: " + diameterBetter(root).first);
     }
 }
+
 
