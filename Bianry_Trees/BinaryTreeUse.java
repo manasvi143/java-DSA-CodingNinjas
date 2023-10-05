@@ -1,9 +1,31 @@
 package Bianry_Trees;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BinaryTreeUse {
 
+    public static ArrayList<Integer> rootToNodePath(BinaryTreeNode<Integer> root , int target){
+        if(root == null)
+        return null;
+
+        if( root.data == target){
+            ArrayList<Integer> ans = new ArrayList<>(root.data);
+            return ans;
+        }
+        ArrayList<Integer> L =  rootToNodePath(root.left, target);
+        if(L!= null){
+            L.add(root.data);
+            return L;
+        }
+        ArrayList<Integer> R = rootToNodePath(root.right, target);
+        if(R != null){
+            R.add(root.data);
+            return R;
+        }else{
+            return null;
+        }
+    } 
     public static void inorder(BinaryTreeNode<Integer> root){
         if(root == null){
             return ;
